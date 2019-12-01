@@ -435,17 +435,391 @@ public Boolean isBSTHelper(TreeNode root, int min, int max) {
 
 
 
-Time: 
+Time:  O(n)
 
-Space: 
-
-
-
-​		
+Space: O(logn)
 
 
 
+Q2: Given two value K1, and K2 (K1 < K2), and a root pointer to BST. Print all keys of tree in range K1 and K2.
+
+​	For BST, if we print out all elements in an in-order sequence, then they satisfy that they are printed in an 	increasing order.
+
+So the basic idea is to print all elements in order and get the range.
+
+```java
+public void inOrderRange(TreeNode root, int K1, int K2) {
+  if(root == null) {
+    return;
+  }
+  if(root.value > K1) { // 左入口
+    inOrderRange (root.left, K1, K2);
+  }
+  
+  if(root.value >= K1 && root.value <= K2) {
+    System.out.println(root.value);
+  }
+  
+  if(root.value < K2) { //右入口
+    inOrderRange (root.right, K1, K2);
+  }
+}
+```
 
 
 
+想一下什么情况才能往左走， 什么情况才能往右走。这道题实际上优化是在寻找左入口 和 右入口，找到之后正常inorder print 即可。
+
+
+
+## Heap & Graph Search I
+
+#### Heap or priority queue: 
+
+​											1
+
+​										/		\
+
+​									3				2
+
+​								/ 	  \		    /
+
+​							5			4		7
+
+```markdown
+is an unsorted array but have special rules to follow:
+
+性质： 堆的实现通过构造二叉堆（binary heap）， 以下性质
+
+	1： 任意节点小于他的所有后裔， 最小元素在堆的根上（堆序性）
+	2: 堆总是一棵完全树。 complete tree
+	3: 将根结点最大的堆叫做 MAX HEAP， 根结点最小的堆叫做最小堆 MIN HEAP
+	4: index of lChild = index of parent * 2 + 1
+	5: index of rChild = index of parent * 2 + 2
+	6: unsorted but follow rules above
+
+支持的基本操作
+	1. insert: 向堆中插入一个新元素： Time: O(log(n))
+  2. update: 将新元素提升使其符合堆的性质： Time O(log(n))  .
+  3. get/top: 获取当前堆顶元素， Time O(1)
+  4. pop:  删除堆顶元素 Time O(log(n))
+  5. heapify: 使一个unsorted array 变成一个堆， Time O(n)
+
+```
+
+
+Q1: Find the smallest K elements in an unsorted array with size N?
+
+First thinking, we need to analyse the relationship between K ane N. 
+
+
+
+**How to make assumptions?** 
+
+1: What is the relationship between k and n?
+
+Solution 1:  sort it and return the first k element. Time : O(nlogn)
+
+Solution 2: 
+
+​		Step1: How to build a min-heap? --> heapify it O(n)
+
+​		Step2: Keep popping out K elements  ----> O(klogn)
+
+​		Total time : O(n + klog(n))
+
+Solution3:
+
+​		Step1: use a max-heap ------O(k)
+
+​			Create  a max-heap that size is the k, then other elements will compare with the top, if the max is 			larger than the elements, then pop it and add element into heap, so the max-heap will maintain the 			size and when all elements are compared, than the max-heap is the result.
+
+​		Step2: iterate from the (k + 1)th to the n-th element, and for the current element X, 
+
+​			case 1: if X < max-heap.top(), max-heap.pop(), and max-heap insert(X);
+
+​			case 2: else, do nothing
+
+​	Total Time: O(k ) + O( (n-k)log(k) )  
+
+```markdown
+compare: 
+O(n + klog(n))											O(k) + O(n-k)logk
+
+case1:  k <<<<< n eg: k = 20, n = 1000000
+	
+	O(cn)															n*(log(k))
+	
+case2: k ~ n eg: k = 1billion n = billion
+	O(nlogn)												O(nlogn)
+ 
+Finally, we can see that sulotion2 and solution3 can be coparable, but it is hard to say which one is better 
+	
+```
+
+
+
+Solution 4:
+
+quick partition
+
+
+
+##### Graph
+
+![Screen Shot 2019-11-28 at 9.41.55 AM](/Users/robinzhou/Desktop/Screen Shot 2019-11-28 at 9.41.55 AM.png)
+
+<01> <14> <23> <13> <04> 
+
+1. Node/state
+
+2. Edge/action
+
+3. Directed vs undirected graph
+
+4. Representation of the graph
+
+   
+
+Basic we have two ways for representating graph
+
+1: Adjacency Matrix : easy, more space, O(v ^ 2)
+
+2: Adjacency List: Space O(V + E)
+
+​		-- Use a hash table
+
+
+
+
+
+
+
+图里的常用search算法
+
+1. Breadth - First Search (BFS-1)
+
+   ![Screen Shot 2019-11-29 at 4.40.30 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-29 at 4.40.30 PM.png)
+
+Objective : 离source node 一步先遍历， 然后二步之外的， 一层一层走
+
+Data structure: Queue. 
+
+​				When we expand one node, and then we can generate two children node
+
+BFS 操作的基本过程： How to describe a BFS's actrion during an interview
+
+	1. Definition 1: expand a node ---like visit or print its value
+ 	2. Definition 2: generate s's neighbor node: reach out to it's neighboring node
+ 	3. Data Structure: Maintain a FIFO queue, put all generated node in the queue
+ 	4. Termination condition: do a loop until the queue is empty
+ 	5. Process
+
+分层打印一个binary tree
+
+```java
+public void BFS1(Node root) {
+  if (root == null) {
+    return;
+  }
+  Queue<Node> q = new LinkedList<Node>();
+  q.offer(root);
+  while(!q.empty()) {
+    int size = q.size(); // suze - 
+    for(int i = 0; i < size; i++) {
+      Node n = q.remove();
+      if(n.left != null) {
+        q.offer(n.left);
+      }
+      if(n.right != null) {
+        q.offer(n.right);
+      }
+      SYstem.out.println(n.val + ' ');
+    }
+    System.out.println();
+  }
+}
+```
+
+
+
+经典例题2: Bipartite: whether a graph's node can be divided into two group, such that the nodes in each group do not have deirect edges between the nodes that belong to the same group.
+
+
+
+
+
+​		![Screen Shot 2019-11-29 at 4.58.59 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-29 at 4.58.59 PM.png)
+
+​				1 <u>
+
+​			/		\
+
+​	(v)2	 _	   3 (v != u)
+
+
+
+Queue = { 2, 3}
+
+expand 2, if one node expanded, then it will not expanded again.
+
+then 2 expand 3, but 2 is in v, then 3 should be in u, but 3 already in v when expand 1
+
+
+
+经典例题3: Determine whether a binary tree is a complete binary tree
+
+
+
+![Screen Shot 2019-11-29 at 5.09.04 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-29 at 5.09.04 PM.png)
+
+ Solution: after detecting the first node that misses one child, then check whether all following nodes expanded to see whether they have any node generated (if any ----> return false)
+
+
+
+Disucssion: 
+
+1. when should we consider to use BFS1 to solve a class of questions?\
+
+   when we deal with thet tree-related problem and in the meantime we need to address the relationship on the same level.
+
+2. BFS1 is not the right algorithm to find the shortest path in an arbitrary path.
+
+
+
+#### Best First Search(BFS-2)
+
+经典算法： Dijkstra's Algorithm
+
+1. Usages: Find the shortest path cost from a single node(source node) to any other nodes in that graph(点到面(== 所有点) 的最短距离算法)。
+2. Example problem: 从北京到中国其他主要城市的最短距离是多少
+3. Data structure: priority-queue( MIN-HEAP)
+4. 解题思路：
+   1. initial state(start node)
+   2. Node expansion/Generation rule:
+   3. Termination condition: 所有点都计算完毕才停止， 也就是p-queue 变空
+
+
+
+```
+Node : 
+BFS1 是先进先出
+BFS2 是谁最小谁先弹出来
+```
+
+ 
+
+​		 Example：
+
+![Screen Shot 2019-11-30 at 3.21.57 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-30 at 3.21.57 PM.png)
+
+Step 0 (initial state) : No nodes have been expanded, Node (4, 0)
+
+ 	1. Pop node (4, 0) out of the p_queue, expand Node(4, 0) generate three successors
+      	1. Node(5, 10)
+      	2. Node(3, 1)
+      	3. Node(6, 1)  // tie-breaking
+	2. pop node (6,1) generate nothing p_queue = {Node(5, 10), Node(3, 1)}
+	3. Pop node(3, 1), generate node(2, cost == parent cost _ 1) = (2, 2)
+    	1. p_queue = { node(5, 10), node(2,2)}
+	4. Pop node(2,2) generate what ??
+    	1. Re-generate node(5, 10), ----> node(5, 2+1) ----> node(5, 3)
+    	2. generate node(1, 3)
+	5. .....
+	6. until the q_queue is empty, then we terminate
+
+Properties:
+
+	1. one node can be expanded once and only once.
+ 	2. one node can be generated more than once, (cost can be reduced over time)
+ 	3. all the cost of the nodes that are expanded are monotonically non-decreasing (所有从 priority queue 里面pop 出来的元素值单调非递减 ===》 单调递增)
+ 	4. time complexity, for a graph with n node and the connectivity of the node is O(nlogn)
+ 	5. when a node is popped out for expansion, its value is fixed which is equal to the shortest distance from the start node.  
+
+经典例题： 
+
+Given a matrix of size N * N, and for each row the elements are sorted in an ascending order. and for each column the elements are also sorted in an ascending order. how to find the k-th smallest element in it?
+
+
+
+1 2 3 4 5
+
+2 3 4 5 6 
+
+3 4 5 6 7 
+
+4 5 6 7 8 
+
+5 6 7 8 9
+
+
+
+
+
+#### Graph Search Algorithms (DFS)
+
+Back-tracking is just a behavior.
+
+First, let's recall the pre-order traverse the binary tree code
+
+![Screen Shot 2019-11-30 at 9.13.50 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-30 at 9.13.50 PM.png)
+
+```java
+public void printTreePreOrder(Node root) { //DFS behavior
+  if (root == null) {
+    return;
+  }
+  System.out.println(root.val);
+  printTreePreOrder(root.left);
+	printTreePreOrder(root.right); 
+}
+```
+
+DFS can be implemented by using iterative way or recursive way
+
+But DFS recursive way easier
+
+![Screen Shot 2019-11-30 at 9.28.38 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-30 at 9.28.38 PM.png)
+
+ DFS 基本方法：
+
+	1. what does it store on each level?(每层代表什么意义， 一般讲解题之前要清楚DFS要recurse 多少层)
+ 	2. How many different states should we try to put on this level(每层有多少个状态/case 需要try)
+
+经典例题：
+
+​	1 Print all subsets of a set S = { 'a', 'b', 'c'}
+
+![Screen Shot 2019-11-30 at 9.51.55 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-30 at 9.51.55 PM.png)
+
+​		Here 基本方法：
+
+			1. For each level, it makes the decision on whether to put this element into the final set or not. n 				elements -----> n layers
+   			2. Two states or cases, considers either select or not
+
+```java
+void FindSubSet(String input, int index, String solution) {
+  if (index == input.length) {
+    if (solution.size() == 0) {
+      System.out.println('empty')
+    }
+    else{
+      System.out.pringln(solution)
+    }
+    return;
+  }
+  //case 1, add string at index to subset
+  solution.push(back(input.at(index)));
+  FindSubSet(input, index + 1, solution);
+  solution.pop_back();
+  //case 2, add nothing
+  FindSubSet(input, index + 1, sulution);
+}
+```
+
+
+
+例题2:
+
+（）（）（）Find all valid permutation using the parenthesis provided![Screen Shot 2019-12-01 at 4.12.40 PM](/Users/robinzhou/Desktop/Screen Shot 2019-12-01 at 4.12.40 PM.png)
 
