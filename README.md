@@ -823,3 +823,13 @@ void FindSubSet(String input, int index, String solution) {
 
 （）（）（）Find all valid permutation using the parenthesis provided![Screen Shot 2019-12-01 at 4.12.40 PM](/Users/robinzhou/Desktop/Screen Shot 2019-12-01 at 4.12.40 PM.png)
 
+```java
+// n stores total number of 'pair of ()' need to add. So total levels == 2*n
+// l stores the number of left parenthesis '(' added so far
+// r stores the number of right patenthesis ')' added so far
+// solu_prefix : solution so far
+void DFS(int n, int l, int r, String solu_prefix) {
+  
+}
+```
+
