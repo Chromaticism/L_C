@@ -1,4 +1,4 @@
-## Queue:
+##   Queue:
 
 1. FIFO == first in first out
 2. Usages: Breadth-First Search related problems
@@ -256,7 +256,7 @@ Define:  for every single node in the tree, the values in its left subtree are a
 
 in order traversal : 2	5	7	10	12	15	20 will form an ascending order.
 
-![Screen Shot 2019-11-19 at 11.36.41 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-19 at 11.36.41 PM.png)
+<img src="./img/Screen Shot 2019-12-03 at 6.59.40 PM.png" alt="Screen Shot 2019-12-03 at 6.59.40 PM" style="zoom: 50%;" />
 
 #### Discussion:
 
@@ -567,7 +567,7 @@ quick partition
 
 ##### Graph
 
-![Screen Shot 2019-11-28 at 9.41.55 AM](/Users/robinzhou/Desktop/Screen Shot 2019-11-28 at 9.41.55 AM.png)
+![Screen Shot 2019-11-28 at 9.41.55 AM](./img/Screen Shot 2019-11-28 at 9.41.55 AM.png)
 
 <01> <14> <23> <13> <04> 
 
@@ -599,7 +599,7 @@ Basic we have two ways for representating graph
 
 1. Breadth - First Search (BFS-1)
 
-   ![Screen Shot 2019-11-29 at 4.40.30 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-29 at 4.40.30 PM.png)
+   ![Screen Shot 2019-11-29 at 4.40.30 PM](./img/Screen Shot 2019-11-29 at 4.40.30 PM.png)
 
 Objective : 离source node 一步先遍历， 然后二步之外的， 一层一层走
 
@@ -649,7 +649,7 @@ public void BFS1(Node root) {
 
 
 
-​		![Screen Shot 2019-11-29 at 4.58.59 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-29 at 4.58.59 PM.png)
+​		![Screen Shot 2019-11-29 at 4.58.59 PM](./img/Screen Shot 2019-11-29 at 4.58.59 PM.png)
 
 ​				1 <u>
 
@@ -671,7 +671,7 @@ then 2 expand 3, but 2 is in v, then 3 should be in u, but 3 already in v when e
 
 
 
-![Screen Shot 2019-11-29 at 5.09.04 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-29 at 5.09.04 PM.png)
+![Screen Shot 2019-11-29 at 5.09.04 PM](./img/Screen Shot 2019-11-29 at 5.09.04 PM.png)
 
  Solution: after detecting the first node that misses one child, then check whether all following nodes expanded to see whether they have any node generated (if any ----> return false)
 
@@ -711,7 +711,7 @@ BFS2 是谁最小谁先弹出来
 
 ​		 Example：
 
-![Screen Shot 2019-11-30 at 3.21.57 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-30 at 3.21.57 PM.png)
+![Screen Shot 2019-11-30 at 3.21.57 PM](./img/Screen Shot 2019-11-30 at 3.21.57 PM.png)
 
 Step 0 (initial state) : No nodes have been expanded, Node (4, 0)
 
@@ -762,7 +762,7 @@ Back-tracking is just a behavior.
 
 First, let's recall the pre-order traverse the binary tree code
 
-![Screen Shot 2019-11-30 at 9.13.50 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-30 at 9.13.50 PM.png)
+![Screen Shot 2019-11-30 at 9.13.50 PM](./img/Screen Shot 2019-11-30 at 9.13.50 PM.png)
 
 ```java
 public void printTreePreOrder(Node root) { //DFS behavior
@@ -779,7 +779,7 @@ DFS can be implemented by using iterative way or recursive way
 
 But DFS recursive way easier
 
-![Screen Shot 2019-11-30 at 9.28.38 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-30 at 9.28.38 PM.png)
+![Screen Shot 2019-11-30 at 9.28.38 PM](./img/Screen Shot 2019-11-30 at 9.28.38 PM.png)
 
  DFS 基本方法：
 
@@ -790,7 +790,7 @@ But DFS recursive way easier
 
 ​	1 Print all subsets of a set S = { 'a', 'b', 'c'}
 
-![Screen Shot 2019-11-30 at 9.51.55 PM](/Users/robinzhou/Desktop/Screen Shot 2019-11-30 at 9.51.55 PM.png)
+![Screen Shot 2019-11-30 at 9.51.55 PM](./img/Screen Shot 2019-11-30 at 9.51.55 PM.png)
 
 ​		Here 基本方法：
 
@@ -821,7 +821,7 @@ void FindSubSet(String input, int index, String solution) {
 
 例题2:
 
-（）（）（）Find all valid permutation using the parenthesis provided![Screen Shot 2019-12-01 at 4.12.40 PM](/Users/robinzhou/Desktop/Screen Shot 2019-12-01 at 4.12.40 PM.png)
+（）（）（）Find all valid permutation using the parenthesis provided![Screen Shot 2019-12-01 at 4.12.40 PM](./img/Screen Shot 2019-12-01 at 4.12.40 PM.png)
 
 ```java
 // n stores total number of 'pair of ()' need to add. So total levels == 2*n
@@ -832,4 +832,27 @@ void DFS(int n, int l, int r, String solu_prefix) {
   
 }
 ```
+
+
+
+
+
+例题3:
+Print all combinations of coins that can sum up to total value k
+
+Eg: k = 99 cents
+
+Coin = [25, 10 5, 1] cent
+
+```java
+
+```
+
+
+
+例题4:
+
+Given a string with no duplicated letters, how to print out all permutations of string
+
+Eg: abc
 
