@@ -856,3 +856,284 @@ Given a string with no duplicated letters, how to print out all permutations of 
 
 Eg: abc
 
+
+
+#### HashTable && String I
+
+###### 	hash_table(general item)
+
+​			-- hash_set is a set that only contains keys
+
+​			-- hash table is a <key, value> pair
+
+
+
+Q1: For a composition with different kinds of words, try to find the top k frequent words from the composition.
+
+```java
+// HashTable ++ prioirty queue
+// Step1: Iterate over all the composition and count the frequency of each word by using a hashtable with <key: string, value: int counter>
+//Step2: Use a Max-heap
+//Or		min-heap
+```
+
+
+
+Q2: If there is only one missing number from 1 to n in an unsorted array, how to find it in O(n) time, size of array is n - 1.
+
+```java
+//Step1: use a hashset to store all elements
+//Step2: iterate over all element from 1 to n and check against set
+//Time: O(n) Space: O(n)
+
+//XOR bit operation
+```
+
+
+
+Q3: Find the common number between two sorted array a[M], b[N].
+
+```java
+//Binary search
+//Step1: For each element in shorter array, we run a binary search in longer array
+//Time: O(mlog(n))
+
+//Hash
+//Step1: hash_table to store all elements from shorter array
+//Step2: for each element in longer array we check if it against
+//Time: O(m + n) Space: O(min(m, n))
+
+//Two pointer
+```
+
+
+
+​		
+
+#### String I
+
+5类常考问题：
+
+1. Removal
+   1. Remove some particular charsform a string
+   2. remove all leading/trailing /duplicated empty space from a string
+2. De-duplication     aaaabbb_cc -------> ab_c
+3. Replace empty space " " with "20%"
+4. Reversal(swap)           eg: I love yahoo  ------> yahoo love I
+5. Substring    --- strstr
+
+
+
+Advanced:
+
+1. Move letter around -----> eg: ABCD1234 ------> A1B2C3D4
+2. Permutation (use DFS)
+3. Decodeing / encoding        aaaabcc -----> a4b1c2
+4. Longest substring that contains only unique chars
+5. Matching(* ?)
+6. Etc
+
+
+
+Q1.1: Char removal
+
+Remove a /some particular chars from a string. 
+
+Eg: input : 'student' 
+
+remove 'u' and 'n' then output: 'stdet'
+
+```c++
+//This is a bad example
+void RemoveChar(string& input) {
+  for (int i = 0; i < input.size(); i++) {
+    if (input.at(i) == 'u' || input.ar(i) == 'n') {
+      input.erase(input.beegin() + i); // here is a O(n) operation
+    }
+  }
+}
+
+// This code has a problem, thinking 'stduuennt'
+```
+
+We can use two pointers to do this, think about quick sort, 
+
+两个挡板
+
+```java
+// slow pointer, all letters that not u or n (results to return) should be put to the left handside of i
+// fast pointer, use to go through input
+
+/*
+	Initialization(2个挡板，3区域， 同向而行)
+	i = 0, all letters to the left-hand side of i (not including i) are all processed letters that should not be removed(slow)
+	
+	j = 0, j is the current index to move(fast). all letters in [i, j] are all area that we do not care(empty space xxx)
+	
+	(j, size - 1]  unknown area to explore.
+*/
+
+//This make O(n^2)  to O(n)
+```
+
+
+
+Q1.2 Remove all leading/trailing and duplicate empty spaces(only leave one empty space if duplicated spaces happen) from the input string.
+
+Eg: 
+
+input : '_ _ _ _ _ abc_ _ _ed_ _ ef_ _'
+
+Output: 'abc_ed_ef'
+
+
+
+#### String II
+
+Q4: String reversal
+
+​		apple -----> elppa
+
+```
+4.1
+Method 1:用两个pointers 即可
+i ---->       <----j
+
+4.2
+Method 2: recursion
+Base Case: when there are 1 or 0 letter remaining, (i >= j)
+Recurse rule: reverse(i + 1, j -1)
+			-------
+		a | ppl |e
+
+void reverse(String input, int left, int right) {
+	if(left >= right) {
+		return;
+	}
+	swap(input, left, right);
+	reverse(input, left + 1, right -1);
+}
+```
+
+
+
+4.3: I love yahoo  ---> yahoo love I.
+
+Primitive way: Stack || I love yahoo.  ------> pop ----> yahoo love I
+
+way2:
+
+​	1: reverse each word
+
+​	2: reverse each word
+
+用 i j 以space 为界， reverse
+
+i evol oohay
+
+yahoo love i
+
+
+
+4.4 abcdef -----> efabcd   shift the whole string to the right-hand side by two positions
+
+​	   abcd || ef (then look at 4.3)
+
+Time : O(n)
+
+
+
+Discussion: 
+
+1. The idea for "I love yahoo" can be combined to from more complex problem.
+
+   eg: if we have empty/ leading/ trailing spaces in the input
+
+2. The idea can be extended to other problems as well
+
+   a: 
+
+   eg: String(array) shifing by x chars to the right:
+
+   ​	'abcdef' shift to the left by two steps  -----> 'cdefab'
+
+   ​	Step1:  两个区间各自reverse： ab cdef  ----> ba ----> fedc
+
+   ​	Step2: 整个word reverse ： abfedc -------> cdef ab
+
+
+
+#### 5 char Replacement:
+
+eg: 'student' -------> 'stuXXt'(den ----> XX)
+
+Two pointers:
+
+​		slow: all letters to the left hand side of slow are the results to return
+
+​		fast: fast index to scan the whole string
+
+
+
+Eg: " www.yahoo.com/?q=flower_market#flower_store"
+
+S1: '_''
+
+S2:"20%" (this time is longer than _)
+
+**Scan from right to left**
+
+Step1: scan the input from left to right to find all occurrences of s1, (eg has two)
+
+Step2: pre-caculate the new size=n + 2(s2.size() - s1.size())
+
+​			extend the length of the input by new size
+
+Step3: use two pointers
+
+​	slow: 放到extended 的最后
+
+​	fast: 放到最后一个字符
+
+<u>all the letters to the right hand side of slow are the final result to return</u>
+
+
+
+Conclusion: 
+
+Case1: if s1.length >= s2.length
+
+​	step1: find every single occurrence of s1 in the original string and just replace s1 with s3 until we are done
+
+case 2: if s1.length < s2.length
+
+​	How many extra spaces should we get
+
+Step1: count how many times s1 show up in the original string, eg twice
+
+Step2: 2 * (s2.size -s1.size)
+
+then see the method above
+
+
+
+Advanced Topic:
+
+1. Shuffling : Eg: ABCD1234. ---> A1B2C3D4
+2. Permutation
+3. 
+
+
+
+​	
+
+
+
+
+
+
+
+
+
+
+
