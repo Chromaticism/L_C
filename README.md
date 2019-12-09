@@ -1129,6 +1129,41 @@ Advanced Topic:
 
 
 
+#### Recursion II
+
+What is recursion ?
+
+ 1. funtion recall itself
+
+ 2. Boil down a big problem to smaller ones(size n depends on size n -1, or n-2 or ....n/2)
+
+ 3. Implementation:
+
+    a. Base case: smallest problem to slove
+
+    b. Recursive rule: how to make the problem smaller (if we can resolve the same problem but with a smaller size, then what is left to do for the current problem size n)
+
+
+
+##### 1 Recursion 与计算结合
+
+ Q1: 计算 a ^ b
+
+```java
+public long pwoer(int a, int b) {
+  if(a == 0) {
+    return 0;
+  }
+  if(b == 0) {
+    return 1;
+  }
+  
+  return power(a, b-1);
+}
+```
+
+
+
 
 
 
