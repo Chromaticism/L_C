@@ -27,9 +27,78 @@ Deque:
 
 Methods of Deque:
 * add(element) : add an element to the tail
+
 * addFirst(element) : Adds an element to the head.
+
 * addLast(element) : Adds an element to the tail.
+
 * offer(element) : Adds an element to the tail and return a boolean to explain if the insertion was successful.
 
+* offerFirst(element) : Adds an element to the head and return a boolean to explain if the insertion was successful.
+
+* offerLast(element) : Adds an element to the tail and returns a boolean to explain if the insertion was successful.
+
+* iterator() : return an iterator for this deque.
+
+* descendingIterator() : return an iterator that has the reverse order for this deque.
+
+* push(element) : Add an element to the head.
+
+* pop(element) : Remove an element from the head and returns it.
+
+* removeFirst() : Removes the element at the head.
+
+* removeLast() : Removes the element at the tail.
+
+* poll() : Retrieves and removes the head of the queue represented by this deque( in other word, the first element of this deque). or returns nulll if this deque is empty.
+
+* pollFirst() : Retrieves and removes the first element of this deque, or returns null if the deque is empty.
+
+* pollLast() : Retrieves and removes the last element of this deque, or returns null if the deque is empty
+
+* peek() : Retrieves, but does not remove, the head of the deque represented by this deque( the first element of this deque), pr return null if this deque is empty.
+
+* **peekFirst():** Retrieves, but does not remove, the first element of this deque, or returns null if this deque is empty.
+
+* **peekLast():** Retrieves, but does not remove, the last element of this deque, or returns null if this deque is empty.
+
+  ![Screen Shot 2020-02-25 at 2.34.30 PM](./img/Screen Shot 2020-02-25 at 2.34.30 PM.png)
+
+
+
+PriorityQueue:
+
+- PQ doesn't permit null
+
+- We cannot create PQ of Objects that are non-comparable
+
+- PQ are unbound queues
+
+- The head of this queue is the least element with respect to the speciied ordering, If multiple elements are tied for least value, the head is one of those values ---- ties are broken arbitrarily.
+
+- The queue retrieval operations poll, remove, peek and element access the element at the head of the queue.
+
+- It inherits methods from AbstractQueue, AbstractCollection, Collection and Object class.
 
   
+
+Constructors Methods:
+
+- **PriorityQueue():** Creates a PriorityQueue with the default initial capacity (11) that orders its elements according to their natural ordering.
+- **PriorityQueue(Collection <E> c):** Creates a PriorityQueue containing the elements in the specified collection.
+- **PriorityQueue(int initialCapacity)**: Creates a PriorityQueue with the specified initial capacity that orders its elements according to their natural ordering.
+- **PriorityQueue(int initialCapacity, Comparator <E>  comparator):** Creates a PriorityQueue with the specified initial capacity that orders its elements according to the specified comparator.
+- **PriorityQueue(PriorityQueue <E> c)**: Creates a PriorityQueue containing the elements in the specified priority queue.
+- **PriorityQueue(SortedSet<E> c)**: Creates a PriorityQueue containing the elements in the specified sorted set.
+
+
+
+Methods: 
+
+- boolean add(E element) : This method inserts the specified element into this priority queue. It will throw an IllegalStateExveption if no space is available.
+- offer() : insert the element, but will return false if the element cannot be inserted due to capacity.
+- public peek() : This method retrieves, but does not remove, the head of this queue, or returns null if this queue is empty.
+- public poll() : This method retrieves and removes the head of this queue, or returns null if this queue is empty.
+
+
+
