@@ -15,7 +15,8 @@ Methods in Queue:
 * poll() — remove and return the head of the queue, return null if the queue is empty
 * size() — return number of elements.
 	
-￼
+
+![queue.queue](./img/queue.queue.png)
 
 Deque:
 - The Deque is related to the double-ended queue that supports add or remove elements from either end of the data structure, it can be used as a queue (FIF)) or as a stack(LIFO). These are faster than Stack and LinedList.
@@ -29,4 +30,6 @@ Methods of Deque:
 * addFirst(element) : Adds an element to the head.
 * addLast(element) : Adds an element to the tail.
 * offer(element) : Adds an element to the tail and return a boolean to explain if the insertion was successful.
-* 
+
+
+  
